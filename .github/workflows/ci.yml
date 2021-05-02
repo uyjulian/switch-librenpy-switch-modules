@@ -40,6 +40,11 @@ jobs:
       with:
         name: renpy-switch-modules
         path: renpy-switch-modules.tar.gz
+    - name: upload renpy startup script artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: renpy-switch-modules-pystartupscript
+        path: renpy-source/renpy.py
 
   create-release:
     needs: [build-artifact]
@@ -56,6 +61,11 @@ jobs:
       with:
         name: renpy-switch-modules
 
+    - name: Download startup script artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: renpy-switch-modules-pystartupscript
+
     - name: Create release
       uses: marvinpinto/action-automatic-releases@latest
       with:
@@ -64,3 +74,4 @@ jobs:
         files: |
           renpy-switch-modules-pylibs/*
           renpy-switch-modules/*
+          renpy-switch-modules-pystartupscript/*
