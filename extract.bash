@@ -13,5 +13,11 @@ tar -xf pygame_sdl2-$PYGAME_SDL2_VER-for-renpy-$PYGAME_SDL2_VER_FOR_RENPY.tar.gz
 mv pygame_sdl2-$PYGAME_SDL2_VER-for-renpy-$PYGAME_SDL2_VER_FOR_RENPY pygame_sdl2-source
 pushd renpy-source
 patch -p1 < ../renpy.patch
+pushd module
+rm -rf gen gen-static
 popd
+popd
+pushd pygame_sdl2-source
 # No patch required for pygame_sdl2.
+rm -rf gen gen-static
+popd
