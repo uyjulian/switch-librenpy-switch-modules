@@ -1,0 +1,66 @@
+name: continuous integration
+
+on: push
+
+jobs:
+  build-artifact:
+    name: Build
+    runs-on: ubuntu-18.04
+
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@master
+      with:
+        submodules: recursive
+    - name: setup environment
+      run: >-
+        sudo bash setup.bash
+    - name: setup docker
+      run: >-
+        sudo bash setup-docker.bash
+    - name: extract
+      run: >-
+        bash extract.bash
+    - name: generate sources
+      run: >-
+        sudo bash generate-sources-docker.bash
+    - name: config and build
+      run: >-
+        sudo bash build-switch-docker.bash
+    - name: package pylibs
+      run: >-
+        bash package-pylibs.bash
+    - name: upload pylibs artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: renpy-switch-modules-pylibs
+        path: renpy-switch-modules-pylibs.zip
+    - name: upload prefix artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: renpy-switch-modules
+        path: renpy-switch-modules.tar.gz
+
+  create-release:
+    needs: [build-artifact]
+    runs-on: ubuntu-20.04
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+    - name: Download pylibs artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: renpy-switch-modules-pylibs
+
+    - name: Download prefix artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: renpy-switch-modules
+
+    - name: Create release
+      uses: marvinpinto/action-automatic-releases@latest
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        prerelease: "${{ contains(github.ref, '-rc') }}"
+        files: |
+          renpy-switch-modules-pylibs/*
+          renpy-switch-modules/*

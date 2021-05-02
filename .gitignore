@@ -1,0 +1,8 @@
+Python-2.7.18
+*.tar.xz
+renpy-*-source
+renpy-source
+*.tar.bz2
+pygame_sdl2-*-for-renpy-*
+pygame_sdl2-source
+*.tar.gz
