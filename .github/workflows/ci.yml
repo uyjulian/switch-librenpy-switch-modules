@@ -1,6 +1,18 @@
 name: continuous integration
 
-on: push
+on:
+  push:
+    paths:
+      - "**.patch"
+      - "**.txt"
+      - "**.bash"
+      - "**.yml"
+  pull_request:
+    paths:
+      - "**.patch"
+      - "**.txt"
+      - "**.bash"
+      - "**.yml"
 
 jobs:
   build-artifact:
