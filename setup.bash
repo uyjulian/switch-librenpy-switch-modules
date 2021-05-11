@@ -1,6 +1,6 @@
 
 apt-get -y update
-apt-get -y install python2.7 python-pip p7zip-full
+apt-get -y install python2.7 python-pip p7zip-full libsdl2-dev cython libsdl2-image-dev libjpeg-dev libpng-dev libsdl2-ttf-dev libsdl2-mixer-dev libavformat-dev libfreetype6-dev libswscale-dev libglew-dev
 apt-get -y install apt-transport-https ca-certificates curl gnupg lsb-release
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 apt-get -y remove docker docker-engine docker.io containerd runc

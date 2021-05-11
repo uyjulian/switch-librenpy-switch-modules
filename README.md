@@ -28,7 +28,11 @@ bash extract.bash
 ```
 Generate the C sources with Cython.
 ```bash
-sudo bash generate-sources-docker.bash
+sudo bash generate-sources.bash
+```
+Configure and build for native.
+```bash
+sudo bash build-native.bash
 ```
 Configure, build, and archive prefix.
 ```bash
@@ -38,8 +42,13 @@ Package the pure python libraries into a zip file.
 ```bash
 bash package-pylibs.bash
 ```
+Package the renpy `common` folder into a zip file.
+```bash
+bash package-renpy-common.bash
+```
 The resulting files are:  
 * `renpy-switch-modules-pylibs.zip` - The pure python modules  
+* `renpy-switch-modules-renpy-common.zip` - The renpy `common` folder
 * `renpy-switch-modules.tar.gz` - The static library for native modules  
 * `renpy.py` - The startup script for Ren'Py  
 

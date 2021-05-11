@@ -35,18 +35,29 @@ jobs:
         bash extract.bash
     - name: generate sources
       run: >-
-        sudo bash generate-sources-docker.bash
+        bash generate-sources.bash
+    - name: config and build for native
+      run: >-
+        sudo bash build-native.bash
     - name: config and build
       run: >-
         sudo bash build-switch-docker.bash
     - name: package pylibs
       run: >-
         bash package-pylibs.bash
+    - name: package renpy-common
+      run: >-
+        bash package-renpy-common.bash
     - name: upload pylibs artifact
       uses: actions/upload-artifact@master
       with:
         name: renpy-switch-modules-pylibs
         path: renpy-switch-modules-pylibs.zip
+    - name: upload renpy-common artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: renpy-switch-modules-renpy-common
+        path: renpy-switch-modules-renpy-common.zip
     - name: upload prefix artifact
       uses: actions/upload-artifact@master
       with:
@@ -67,6 +78,10 @@ jobs:
       uses: actions/download-artifact@v1
       with:
         name: renpy-switch-modules-pylibs
+    - name: Download renpy-common artifact
+      uses: actions/download-artifact@v1
+      with:
+        name: renpy-switch-modules-renpy-common
 
     - name: Download prefix artifact
       uses: actions/download-artifact@v1
@@ -84,6 +99,7 @@ jobs:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
         prerelease: "${{ contains(github.ref, '-rc') }}"
         files: |
+          renpy-switch-modules-renpy-common/*
           renpy-switch-modules-pylibs/*
           renpy-switch-modules/*
           renpy-switch-modules-pystartupscript/*
